@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import ReactMarkdown from "react-markdown";
+import Editor from "./components/Editor";
+
 
 function App() {
+    const [rawMarkdown, setRawMarkdown] = React.useState('View here')
+    const getRawMarkdown = (e) => { console.log(e.target.value); setRawMarkdown(e.target.value) }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="container">
+          <Editor title="Markdown">
+              <textarea onChange={getRawMarkdown} className="editor__textarea" placeholder="Write here!" />
+          </Editor>
+          <Editor title="Viewer">
+              <ReactMarkdown children={rawMarkdown} className="viewer" />
+          </Editor>
+
+      </div>
     </div>
   );
 }
