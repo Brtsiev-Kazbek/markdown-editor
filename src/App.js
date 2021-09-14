@@ -1,21 +1,32 @@
 import React from 'react'
-import ReactMarkdown from "react-markdown";
-import Editor from "./components/Editor";
+import MarkdownInput from "./components/MarkdownInput";
+import MarkdownView from "./components/MarkdownView";
+
 
 
 function App() {
-    const [rawMarkdown, setRawMarkdown] = React.useState('View here')
-    const getRawMarkdown = (e) => { console.log(e.target.value); setRawMarkdown(e.target.value) }
+    const template = `A paragraph with *emphasis* and **strong importance**.
+\\
+\\
+Lists
+* [ ] todo
+* [x] done
+\\
+\\
+A table:
+
+| a | b | c |
+| - | - | - |
+|Hello|from|tables|`;
+
+    const [text, setText] = React.useState(template);
+    const catchTyping = (e) => setText(e.target.value)
+
   return (
     <div className="App">
       <div className="container">
-          <Editor title="Markdown">
-              <textarea onChange={getRawMarkdown} className="editor__textarea" placeholder="Write here!" />
-          </Editor>
-          <Editor title="Viewer">
-              <ReactMarkdown children={rawMarkdown} className="viewer" />
-          </Editor>
-
+        <MarkdownInput onChange={catchTyping} text={text}/>
+        <MarkdownView rawMarkdown={text}/>
       </div>
     </div>
   );
